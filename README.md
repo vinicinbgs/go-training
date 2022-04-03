@@ -1,3 +1,8 @@
+# Start
+```sh
+go run ./src
+```
+
 ## Infos
 Functions with Capitalize word are public <br/>
 Functions with low case first letter are private
