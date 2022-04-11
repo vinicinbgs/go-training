@@ -1,3 +1,3 @@
-module mypack
+module main
 
 go 1.18

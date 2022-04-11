@@ -3,15 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
-	"mypack/albums"
 )
 
 func main() {
-	getAlbumsHandler := http.HandlerFunc(albums.GetAlbums)
-	
-	http.Handle("/albums", getAlbumsHandler)
+	Routes()
 
-	log.Println("Server Start")
+	log.Println("Server Start in http://localhost:8080")
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
