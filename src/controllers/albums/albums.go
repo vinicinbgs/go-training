@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"fmt"
 )
 
 type Album struct {
@@ -40,12 +41,23 @@ func GetAlbums(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 
 	if err != nil {
-		log.Println("ERROR:", err)
+		log.Println("[WARN]:", err)
 		return
 	}
 	
-	album, _ := json.Marshal(albums[uint(id)])
-    
+	if id > len(albums) || id <= 0 {
+		log.Println("[WARN]:", "RECORD NOT EXIST")
+		w.WriteHeader(http.StatusNotFound)
+		code := http.StatusNotFound
+		res := fmt.Sprintf(`{"message": "RECORD NOT EXIST", "status": %d }`, code)
+		io.WriteString(w, string(res))
+		return
+	}
+
+	album, _ := json.Marshal(albums[uint(id-1)])
+
+	log.Println(len(albums))
+
 	log.Println(string(album))
 
 	io.WriteString(w, string(album))

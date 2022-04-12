@@ -1,26 +1,25 @@
 package main
 
 import (
-	"io"
 	"log"
 	"net/http"
-	"main/controllers"
+	"controllers/albums"
+	"controllers/healthcheck"
 )
 
 func Routes() {
 	log.Println("Routes loaded")
 
-	http.Handle("/", http.HandlerFunc(Healthcheck))
+	Healthcheck()
 
 	Albums()
 }
 
-func Healthcheck(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "OK")
+func Healthcheck() {
+	http.Handle("/", http.HandlerFunc(healthcheck.Status))
 }
 
 func Albums() {
 	getAlbumsHandler := http.HandlerFunc(albums.GetAlbums)
-	
 	http.Handle("/albums", getAlbumsHandler)
 }
